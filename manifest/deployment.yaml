@@ -16,8 +16,24 @@ spec:
     spec:
       containers:
         - name: my-container
-          image: default-route-openshift-image-registry.apps.rm3.7wse.p1.openshiftapps.com/tobias-aditya-dev/my-image:1.0.0
+          image: default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/dheekarsw-dev/aowka:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
               protocol: TCP
+          env:
+            # Diambil dari ConfigMap
+            - name: MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MONGODB_DATABASE
+
+            # Diambil dari Secret
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: app-db-secret
+                  key: MONGO_URI
+              
+              
